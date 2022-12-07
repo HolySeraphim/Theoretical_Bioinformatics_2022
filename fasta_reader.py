@@ -5,6 +5,10 @@ import ctypes
 
 
 def choose_file():
+    """
+    Open tkinter to choose fastA
+    :return: path to choosen file
+    """
     try:
         ctypes.windll.shcore.SetProcessDpiAwareness(1)
     except AttributeError:
@@ -16,6 +20,11 @@ def choose_file():
 
 
 def fasta(file):
+    """
+    Get sequences from fastA file
+    :param file: path to fastA file
+    :return: array of sequences from fastA file
+    """
     dot_name = os.path.basename(file)[os.path.basename(file).find('.'):]
     if dot_name == '.fa' or dot_name == '.fasta':
         with open(file, 'r') as f:
@@ -24,7 +33,10 @@ def fasta(file):
         for line in range(len(data)):
             if data[line].startswith('>'):
                 seq.append(data[line + 1])
-        return str(seq)[2:-2]
+        for line in range(0, len(seq)):
+            while seq[line][-1] == '\n':
+                seq[line] = seq[line][:-1]
+        return seq
     else:
         print('Invalid format')
         exit()

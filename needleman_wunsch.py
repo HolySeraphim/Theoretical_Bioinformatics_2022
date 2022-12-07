@@ -2,12 +2,18 @@ from PAM250 import PAM250
 # ---------------------
 # Score points settings
 m = 1  # match
-r = -2  # replacement
-d = -1  # gap
+r = -1  # replacement
+d = -2  # gap
 # ---------------------
 
 
 def tab_creating(seq1: str, seq2: str):
+    """
+    Create a tab for aligning nucleotide or protein sequences
+    :param seq1: the first sequence
+    :param seq2: the second sequence
+    :return: the filled tab
+    """
     seq1, seq2 = seq1.upper(), seq2.upper()
     tab = [[-1] * len(seq2) for _ in range(len(seq1))]
     for i in range(0, len(seq1)):
@@ -41,6 +47,13 @@ def tab_creating(seq1: str, seq2: str):
 
 
 def printer(seq1: str, seq2: str, tab):
+    """
+    Build aligned sequences based on the filled tab
+    :param seq1: the first sequence
+    :param seq2: the second sequence
+    :param tab: the filled tab
+    :return: aligned sequences
+    """
     seq1, seq2 = seq1.upper(), seq2.upper()
     ans1, ans2 = '', ''
     i, j = len(seq1) - 1, len(seq2) - 1
@@ -60,12 +73,12 @@ def printer(seq1: str, seq2: str, tab):
                 j = j - 1
     print('\n\033[0mThe first sequence  :\033[92m', ''.join(reversed(ans1)),
           '\n\033[0mThe second sequence :\033[92m', ''.join(reversed(ans2)),
-          '\n\033[0mThe numer of gaps   :\033[91m', (''.join(reversed(ans1))+''.join(reversed(ans2))).count('-'))
+          '\n\033[0mThe number of gaps   :\033[91m', (''.join(reversed(ans1))+''.join(reversed(ans2))).count('-'))
 
 
 if __name__ == '__main__':
     from fasta_reader import *
-    sequence1 = ' ' + str(fasta(choose_file()))
-    sequence2 = ' ' + str(fasta(choose_file()))
+    sequence1 = ' ' + str(fasta(choose_file())[0])
+    sequence2 = ' ' + str(fasta(choose_file())[0])
     table = tab_creating(sequence1, sequence2)
     printer(sequence1, sequence2, table)
